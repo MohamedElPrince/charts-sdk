@@ -1,0 +1,31 @@
+{
+  "icon": "./assets/icon.png",
+  "name": "Liquid Fill Gauge",
+  "hint": "Liquid Fill Gauge using D3",
+  "settings": [
+    {
+      "name": {
+        "key": "group"
+      },
+      "settings": [
+        {
+          "name": {
+            "key": "setting"
+          },
+          "key": "key1",
+          "type": "boolean"
+        }
+      ]
+    }
+  ],
+  "bindingsTrays": [
+    {
+      "key": "tray-key",
+      "name": {
+        "key": "tray"
+      },
+      "queryRole": "measure",
+      "minCount": 1
+    }
+  ]
+}
