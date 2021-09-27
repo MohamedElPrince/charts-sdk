@@ -17,7 +17,8 @@ const LiquidFillGauge = (props: ComponentProps) => {
       min: col.settings.min ?? 0,
       max: col.settings.max ?? 10 ** Math.ceil(Math.log10(data.value)),
       isPercent: col.settings.isPercent,
-      value: +data.value
+      value: +data.value,
+      label: col.name
     };
   });
 
@@ -31,12 +32,15 @@ const LiquidFillGauge = (props: ComponentProps) => {
             minValue={measure.min}
             maxValue={measure.max}
             isPercent={measure.isPercent}
+            label={measure.label}
           />
         );
       })}
     </div>
   );
 };
+
+console.log({measure});
 
 export default LiquidFillGauge;
 
@@ -53,6 +57,7 @@ function LiquidFillGaugeComponent({
   const chartValue = isPercent
     ? ((currentValue - minValue) / (maxValue - minValue)) * 100
     : currentValue;
+  const measureLabel = label;
 
   useEffect(() => {
     ref.current.innerHTML = '';
@@ -407,17 +412,14 @@ function LiquidFillGaugeComponent({
           animateWave(config.waveAnimateTime);
         });
     }
-  }, [chartValue, chartMaxValue, chartMinValue, isPercent]);
+  }, [chartValue, chartMaxValue, chartMinValue, isPercent, measureLabel]);
 
  return (
     <div className="LiquidFillGaugeComponent">
       <div ref={ref} />
       <div className="LiquidFillGaugeComponent__info">
         <p>
-          <strong>Min:</strong> {minValue}
-        </p>
-        <p>
-          <strong>Max:</strong> {maxValue}
+          <strong>{{measureLabel}}</strong>
         </p>
       </div>
     </div>

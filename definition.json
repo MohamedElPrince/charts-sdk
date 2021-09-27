@@ -32,7 +32,12 @@
           "name": "Min/Max",
           "settings": [
             {
-              "name": "Is Percent",
+              "key": "label",
+              "name": "label",
+              "type": "text"
+            },
+            {
+              "name": "Show Percent",
               "key": "isPercent",
               "type": "boolean",
               "defaultValue": true
