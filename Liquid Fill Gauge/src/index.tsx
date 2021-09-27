@@ -413,12 +413,7 @@ function LiquidFillGaugeComponent({
     <div className="LiquidFillGaugeComponent">
       <div ref={ref} />
       <div className="LiquidFillGaugeComponent__info">
-        <p>
-          <strong>Min:</strong> {minValue}
-        </p>
-        <p>
-          <strong>Max:</strong> {maxValue}
-        </p>
+        
       </div>
     </div>
   );
