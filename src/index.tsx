@@ -409,15 +409,15 @@ function LiquidFillGaugeComponent({
     }
   }, [chartValue, chartMaxValue, chartMinValue, isPercent]);
 
-  return (
+ return (
     <div className="LiquidFillGaugeComponent">
       <div ref={ref} />
       <div className="LiquidFillGaugeComponent__info">
         <p>
-          <strong>Min:</strong> {chartMinValue} {isPercent ? '%' : ''}
+          <strong>Min:</strong> {minValue}
         </p>
         <p>
-          <strong>Max:</strong> {chartMaxValue} {isPercent ? '%' : ''}
+          <strong>Max:</strong> {maxValue}
         </p>
       </div>
     </div>
