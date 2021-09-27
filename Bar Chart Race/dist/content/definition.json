@@ -1,0 +1,62 @@
+{
+  "icon": "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIGJhc2VQcm9maWxlPSJ0aW55LXBzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMzAwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCI+Cgk8dGl0bGU+YmFyIHJhY2UgaWNvbjwvdGl0bGU+Cgk8ZGVmcz4KCQk8aW1hZ2UgIHdpZHRoPSIyODgiIGhlaWdodD0iMjUyIiBpZD0iaW1nMSIgaHJlZj0iZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFTQUFBQUQ4Q0FNQUFBRGcxb2xTQUFBQUFYTlNSMElCMmNrc2Z3QUFBRDlRVEZSRkFBQUFlY1RnZWNUZ2VjVGdlY1RnNnBLSDZwS0g2cEtINnBLSDZwS0g2cEtINzhOLzc4Ti83OE4vNzhOLzc4Ti83OE4vdDk5N3Q5OTd0OTk3dDk5NzFMNERQUUFBQUJWMFVrNVRBT2IvWjNOWEV2OHpNZ3E0ZFAraHBHZHpMZjlsM0lqTUZBQUFBYkZKUkVGVWVKenQwTWR0QTBFQXdNQ1ZjNVpULzdYNkx3SEh6eHA3T014MFFJNXh1bUhETUdpYlFjR2dZRkF3S0JnVURBb0dCWU9DUWNHZ1lGQXdLQmdVREFvR0JZT0NRY0dnWUZBd0tCZ1VEQW9HQllPQ1FjR2dZRkF3S0JnVURBb0dCWU9DUWNHZ1lGQXdLQmdVREFvR0JZT0NRV0dNMnpzMkRBQUFBQUFBQUE3aC9wQWU1ZzE2UEtRbmc3WVpGQXdLQmdXRGdrSEJvR0JRTUNnWUZBd0tCZ1dEZ2tIQm9HQlFNQ2dZRkF3S0JnV0Rna0hCb0dCUU1DZ1lGQXdLQmdXRGdrSEJvR0JRTUNnWUZBd0tCZ1dEZ2tIQm9HQlFNQ2hNSFBSOFNDL3pCZ0VBQUFBQUFBQUEvK3QxYjk1V0g3bnd2amNmcTQ5Y1dQM2ppa0hCb0dCUU1DZ1lGQXdLQmdXRGdrSEJvR0JRTUNnWUZBd0tCZ1dEZ2tIQm9HQlFNQ2dZRkF3S0JnV0Rna0hCb0dCUU1DZ1lGQXdLQmdXRGdrSEJvR0JRTUNnWUZBd0tCb1c5RFRydnplZnFJd0FBQUFBQUFBQXcxOWRzMzZ1TEp2dVo3WGQxMFdRR0JZT0NRY0dnWUZBd0tCZ1VEQW9HQllPQ1FjR2dZRkF3S0JnVURBb0dCWU9DUWNHZ1lGQXdLQmdVREFvR0JZT0NRY0dnWUZBd0tCZ1VEQW9HQllPQ1FjR2dZRkF3S0JnVURBb0diZnNER3JTcjhqYWgwU1lBQUFBQVNVVk9SSzVDWUlJPSIvPgoJPC9kZWZzPgoJPHN0eWxlPgoJCXRzcGFuIHsgd2hpdGUtc3BhY2U6cHJlIH0KCTwvc3R5bGU+Cgk8dXNlIGlkPSJTaGFwZSAxIGNvcHkgNCIgaHJlZj0iI2ltZzEiIHg9IjYiIHk9IjIzIiAvPgo8L3N2Zz4=",
+  "options": {
+    "aggregation": true
+  },
+  "settings": [
+    {
+      "name": {
+        "key": "group"
+      },
+      "settings": [
+        {
+          "name": "Duration",
+          "key": "duration",
+          "type": "number",
+          "defaultValue": 250
+        }
+      ]
+    }
+  ],
+  "bindingsTrays": [
+    {
+      "key": "name",
+      "name": "Name",
+      "queryRole": "row",
+      "minCount": 1,
+      "maxCount": 1
+    },
+    {
+      "key": "value",
+      "name": "Value",
+      "queryRole": "measure",
+      "settings": [
+        {
+          "name": "Settings",
+          "settings": [
+            {
+              "name": "Running Total",
+              "key": "running-total",
+              "type": "running-total"
+            }
+          ]
+        }
+      ],
+      "minCount": 1,
+      "maxCount": 1
+    },
+    {
+      "key": "period",
+      "name": "Period",
+      "queryRole": "row",
+      "minCount": 1,
+      "maxCount": 1
+    },
+    {
+      "key": "color",
+      "name": "Color",
+      "queryRole": "row",
+      "maxCount": 1
+    }
+  ]
+}
