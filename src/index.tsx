@@ -10,29 +10,49 @@ const LiquidFillGauge = (props: ComponentProps) => {
   const insightData = props.insight.data.data;
   const [aggregationData] = insightData;
 
-  const [{ value }, { value: maxValue }] = aggregationData;
-
-  const isPercent = props.insight.context.insight.settings.isPercent ?? true;
-
-  console.log({ aggregationData, value: +value, maxValue: +maxValue, isPercent });
+  const formattedMeasures = props.insight.context.insight.bindings.measure.map((col, index) => {
+    const data = aggregationData[index];
+    return {
+      id: col.id,
+      min: col.settings.min ?? 0,
+      max: col.settings.max ?? 10 ** Math.ceil(Math.log10(data.value)),
+      isPercent: col.settings.isPercent,
+      value: +data.value
+    };
+  });
 
   return (
-    <div>
-      <LiquidFillGaugeComponent currentValue={+value} maxValue={+maxValue} isPercent={isPercent} />
-      {/* <LiquidFillGaugeComponent currentValue={70} /> */}
+    <div className="LiquidFillGauge__wrapper">
+      {formattedMeasures.map(measure => {
+        return (
+          <LiquidFillGaugeComponent
+            key={measure.id}
+            currentValue={measure.value}
+            minValue={measure.min}
+            maxValue={measure.max}
+            isPercent={measure.isPercent}
+          />
+        );
+      })}
     </div>
   );
 };
 
 export default LiquidFillGauge;
 
-function LiquidFillGaugeComponent({ currentValue = 50, maxValue = 100, isPercent = true }) {
+function LiquidFillGaugeComponent({
+  currentValue = 50,
+  minValue = 0,
+  maxValue = 100,
+  isPercent = true
+}) {
   const ref = useRef();
 
+  const chartMinValue = isPercent ? 0 : minValue;
   const chartMaxValue = isPercent ? 100 : maxValue;
-  const chartValue = isPercent ? (currentValue / maxValue) * 100 : currentValue;
-
-  console.log({ chartValue });
+  const chartValue = isPercent
+    ? ((currentValue - minValue) / (maxValue - minValue)) * 100
+    : currentValue;
 
   useEffect(() => {
     ref.current.innerHTML = '';
@@ -51,7 +71,7 @@ function LiquidFillGaugeComponent({ currentValue = 50, maxValue = 100, isPercent
 
     function liquidFillGaugeDefaultSettings() {
       return {
-        minValue: 0, // The gauge minimum value.
+        minValue: chartMinValue, // The gauge minimum value.
         maxValue: chartMaxValue, // The gauge maximum value.
         circleThickness: 0.05, // The outer circle thickness as a percentage of it's radius.
         circleFillGap: 0.05, // The size of the gap between the outer circle and wave circle as a percentage of the outer circles radius.
@@ -97,8 +117,6 @@ function LiquidFillGaugeComponent({ currentValue = 50, maxValue = 100, isPercent
     var wavetextcolor = 'red';
     var height = 150;
     var width = 150;
-
-    console.log({ numbercurrent });
 
     const numberCurrent = numbercurrent;
     const numberMax = numbermax;
@@ -389,43 +407,19 @@ function LiquidFillGaugeComponent({ currentValue = 50, maxValue = 100, isPercent
           animateWave(config.waveAnimateTime);
         });
     }
-  }, [chartValue, chartMaxValue, isPercent]);
+  }, [chartValue, chartMaxValue, chartMinValue, isPercent]);
 
   return (
-    <div>
+    <div className="LiquidFillGaugeComponent">
       <div ref={ref} />
-      <p>
-        max: {chartMaxValue} {isPercent ? '%' : ''}
-      </p>
+      <div className="LiquidFillGaugeComponent__info">
+        <p>
+          <strong>Min:</strong> {chartMinValue} {isPercent ? '%' : ''}
+        </p>
+        <p>
+          <strong>Max:</strong> {chartMaxValue} {isPercent ? '%' : ''}
+        </p>
+      </div>
     </div>
   );
 }
-
-// // @ts-nocheck
-
-// import React, { useEffect, useRef } from 'react';
-// import { ComponentsProps } from '@incorta-org/visual-sdk';
-// import './styles.less';
-// import * as echarts from 'echarts/dist/echarts.esm';
-// import 'echarts-liquidfill/dist/echarts-liquidfill';
-
-// const LiquidFillGauge = (props: ComponentsProps) => {
-//   const ref = useRef();
-
-//   useEffect(() => {
-//     console.log('ref.current', ref.current);
-//     const chart = echarts.init(ref.current);
-//     chart.setOption({
-//       series: [
-//         {
-//           type: 'liquidFill',
-//           data: [0.6, 0.5, 0.4, 0.3]
-//         }
-//       ]
-//     });
-//   }, []);
-
-//   return <div ref={ref} style={{ width: '100%', height: '100%' }} />;
-// };
-
-// export default LiquidFillGauge;

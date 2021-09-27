@@ -17,12 +17,6 @@
           },
           "key": "key1",
           "type": "boolean"
-        },
-        {
-          "name": "Is Percent",
-          "key": "isPercent",
-          "type": "boolean",
-          "defaultValue": true
         }
       ]
     }
@@ -32,20 +26,30 @@
       "key": "measure",
       "name": "Measure",
       "queryRole": "measure",
-      "minCount": 1
-    },
-    {
-      "key": "max",
-      "name": "Max",
-      "queryRole": "measure",
       "minCount": 1,
-      "maxCount": 1
-    },
-    {
-      "key": "min",
-      "name": "Min",
-      "queryRole": "measure",
-      "maxCount": 1
+      "settings": [
+        {
+          "name": "Min/Max",
+          "settings": [
+            {
+              "name": "Is Percent",
+              "key": "isPercent",
+              "type": "boolean",
+              "defaultValue": true
+            },
+            {
+              "key": "min",
+              "name": "Min",
+              "type": "number"
+            },
+            {
+              "key": "max",
+              "name": "Max",
+              "type": "number"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
