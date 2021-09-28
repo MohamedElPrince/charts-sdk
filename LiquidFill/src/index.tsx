@@ -40,7 +40,7 @@ export default LiquidFill;
 
 //copied code from http://jsfiddle.net/f975pnta/
 
-function LiquidFillGaugeComponent({
+function LiquidFillComponent({
   currentValue = 50,
   minValue = 0,
   maxValue = 100,
@@ -70,7 +70,7 @@ function LiquidFillGaugeComponent({
     }
 
 
-  function liquidFillGaugeDefaultSettings() {
+  function liquidFillDefaultSettings() {
     return {
       minValue: 0, // The gauge minimum value.
       maxValue: 100, // The gauge maximum value.
@@ -140,7 +140,7 @@ function LiquidFillGaugeComponent({
     circleBorderColor: circlebordercolor
   };
 
-  var defaults = liquidFillGaugeDefaultSettings();
+  var defaults = liquidFillDefaultSettings();
   var config = Object.assign(defaults, options);
 
     var svg = d3
@@ -286,7 +286,7 @@ function LiquidFillGaugeComponent({
     var text1 = gaugeGroup
       .append('text')
       .text(textRounder(textStartValue) + percentText)
-      .attr('class', 'liquidFillGaugeText')
+      .attr('class', 'liquidFillText')
       .attr('text-anchor', 'middle')
       .attr('font-size', textPixels + 'px')
       .style('fill', config.textColor)
@@ -338,7 +338,7 @@ function LiquidFillGaugeComponent({
     var text2 = fillCircleGroup
       .append('text')
       .text(textRounder(textStartValue) + percentText)
-      .attr('class', 'liquidFillGaugeText')
+      .attr('class', 'liquidFillText')
       .attr('text-anchor', 'middle')
       .attr('font-size', textPixels + 'px')
       .style('fill', config.waveTextColor)
@@ -406,4 +406,14 @@ function LiquidFillGaugeComponent({
         animateWave(config.waveAnimateTime);
       });
   }
-});
+}, [chartValue, chartMaxValue, chartMinValue, isPercent]);
+
+return (
+   <div className="LiquidFillComponent">
+     <div ref={ref} />
+     <div className="LiquidFillComponent__info">
+       
+     </div>
+   </div>
+   );
+  }
