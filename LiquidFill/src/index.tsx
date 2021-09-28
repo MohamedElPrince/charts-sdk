@@ -1,12 +1,37 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ComponentProps } from '@incorta-org/component-sdk';
 import './styles.less';
+import * as d3 from 'd3';
 
 const LiquidFill = (props: ComponentProps) => {
-  console.log(props);
+  const insightData = props.insight.data.data;
+  const [aggregationData] = insightData;
+
+  const formattedMeasures = props.insight.context.insight.bindings.measure.map((col, index) => {
+    const data = aggregationData[index];
+    return {
+      id: col.id,
+      min: col.settings.min ?? 0,
+      max: col.settings.max ?? 10 ** Math.ceil(Math.log10(data.value)),
+      isPercent: col.settings.isPercent,
+      value: +data.value
+    };
+  });
+
+
   return (
-    <div className="test">
-      <h1>Hello incorta Component</h1>
+    <div className="LiquidFill__wrapper">
+      {formattedMeasures.map(measure => {
+        return (
+          <LiquidFillComponent
+            key={measure.id}
+            currentValue={measure.value}
+            minValue={measure.min}
+            maxValue={measure.max}
+            isPercent={measure.isPercent}
+          />
+        );
+      })}
     </div>
   );
 };
