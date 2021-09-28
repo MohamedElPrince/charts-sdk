@@ -1,7 +1,10 @@
 {
   "icon": "./assets/icon.png",
   "name": "LiquidFill",
-  "hint": "",
+  "hint": "Liquid Fill Gauge using D3",
+  "options": {
+    "aggregation": true
+  },
   "settings": [
     {
       "name": {
@@ -20,12 +23,34 @@
   ],
   "bindingsTrays": [
     {
-      "key": "tray-key",
-      "name": {
-        "key": "tray"
-      },
+      "key": "measure",
+      "name": "Measure",
       "queryRole": "measure",
-      "minCount": 1
+      "minCount": 1,
+      "settings": [
+        {
+          "name": "Min/Max",
+          "settings": [
+            {
+              "name": "Show Percent",
+              "key": "isPercent",
+              "type": "boolean",
+              "defaultValue": true
+            },
+            {
+              "key": "min",
+              "name": "Min",
+              "type": "number"
+            },
+            {
+              "key": "max",
+              "name": "Max",
+              "type": "number"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
+
