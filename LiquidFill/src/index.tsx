@@ -69,11 +69,10 @@ function LiquidFillComponent({
       });
     }
 
-
   function liquidFillDefaultSettings() {
     return {
-      minValue: 0, // The gauge minimum value.
-      maxValue: 100, // The gauge maximum value.
+      minValue: chartMinValue, // The gauge minimum value.
+      maxValue: chartMaxValue, // The gauge maximum value.
       circleThickness: 0.05, // The outer circle thickness as a percentage of it's radius.
       circleFillGap: 0.05, // The size of the gap between the outer circle and wave circle as a percentage of the outer circles radius.
       circleColor: '#178BCA', // The color of the outer circle.
@@ -173,7 +172,7 @@ function LiquidFillComponent({
     textValue = (numberCurrent / numberMax) * 100;
   }
 
-  let elementId = uuid();
+  const elementId = uuid();
 
   var gauge = liquid.append('g').attr('class', 'gauge');
 
@@ -323,7 +322,9 @@ function LiquidFillComponent({
   var wave = waveGroup.append('path').datum(data).attr('d', clipArea).attr('T', 0);
 
   // The inner circle with the clipping wave attached.
-  var fillCircleGroup = gaugeGroup.append('g').attr('clip-path', 'url(#clipWave' + elementId + ')');
+  var fillCircleGroup = gaugeGroup
+  .append('g')
+  .attr('clip-path', 'url(#clipWave' + elementId + ')');
 
   fillCircleGroup
     .append('circle')
@@ -381,7 +382,7 @@ function LiquidFillComponent({
         'transform',
         'translate(' + waveGroupXPosition + ',' + waveRiseScale(fillPercent) + ')'
       );
-    //.each("start", function(){ wave.attr('transform','translate(1,0)'); }); // This transform is necessary to get the clip wave positioned correctly when waveRise=true and waveAnimate=false. The wave will not position correctly without this, but it's not clear why this is actually necessary.
+    // .each("start", function(){ wave.attr('transform','translate(1,0)'); }); // This transform is necessary to get the clip wave positioned correctly when waveRise=true and waveAnimate=false. The wave will not position correctly without this, but it's not clear why this is actually necessary.
   } else {
     waveGroup.attr(
       'transform',
