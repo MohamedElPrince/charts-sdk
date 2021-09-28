@@ -96,43 +96,61 @@ function LiquidFillGaugeComponent({
     };
   }
 
-  var $this = $('.liquidchart1');
+  var $this = ref.current;
 
-  const width = $this.data('width'),
-    height = $this.data('height'),
-    radius = $this.data('r'),
-    numberCurrent = $this.data('numbercurrent'),
-    numberMax = $this.data('numbermax');
+  var chartpaddingleft = 0;
+  var circlebordercolor = '#ee6b25';
+  var circleborderthickness = 7;
+  var circlecolor = 'transparent';
+  var circlethickness = 0.12;
+  var displaypercent = isPercent;
+  var displaytext = true;
+  var numbercurrent = chartValue;
+  var numbermax = 100;
+  var radius = 70;
+  var textcolor = 'black';
+  var texthorzposition = 0;
+  var textvertposition = 0.5;
+  var waveanimatetime = 1000;
+  var wavecolor = '#ee6b25';
+  var waveheightscaling = true;
+  var waveopacity = 0.3;
+  var wavetextcolor = 'red';
+  var height = 150;
+  var width = 150;
+
+  const numberCurrent = numbercurrent;
+  const numberMax = numbermax;
 
   var options = {
-    displayPercent: $this.data('displaypercent'),
-    displayText: $this.data('displaytext'),
-    circleColor: $this.data('circlecolor'),
-    textColor: $this.data('textcolor'),
-    waveTextColor: $this.data('wavetextcolor'),
-    waveColor: $this.data('wavecolor'),
-    waveOpacity: $this.data('waveopacity'),
-    circleThickness: $this.data('circlethickness'),
-    textVertPosition: $this.data('textvertposition'),
-    textHorzPosition: $this.data('texthorzposition'),
-    waveAnimateTime: $this.data('waveanimatetime'),
-    chartPaddingLeft: $this.data('chartpaddingleft'),
-    waveHeightScaling: $this.data('waveheightscaling'),
-    circleBorderThickness: $this.data('circleborderthickness'),
-    circleBorderColor: $this.data('circlebordercolor')
+    displayPercent: displaypercent,
+    displayText: displaytext,
+    circleColor: circlecolor,
+    textColor: textcolor,
+    waveTextColor: wavetextcolor,
+    waveColor: wavecolor,
+    waveOpacity: waveopacity,
+    circleThickness: circlethickness,
+    textVertPosition: textvertposition,
+    textHorzPosition: texthorzposition,
+    waveAnimateTime: waveanimatetime,
+    chartPaddingLeft: chartpaddingleft,
+    waveHeightScaling: waveheightscaling,
+    circleBorderThickness: circleborderthickness,
+    circleBorderColor: circlebordercolor
   };
 
   var defaults = liquidFillGaugeDefaultSettings();
   var config = Object.assign(defaults, options);
 
-  var svg = d3
-    .select($this[0])
-    .append('svg')
-    .attr('width', width)
-    .attr('height', height)
-    .append('g')
-    .attr('class', 'liquidchart')
-    .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+    var svg = d3
+      .select($this)
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height)
+      .append('g')
+      .attr('class', 'liquidchart')
+      .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
   var liquid = svg.append('g').attr('class', 'liquid');
 
