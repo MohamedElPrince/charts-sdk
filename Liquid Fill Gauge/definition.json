@@ -32,6 +32,11 @@
           "name": "Min/Max",
           "settings": [
             {
+              "name": "Format",
+              "key": "format",
+              "type": "number-format"
+            },
+            {
               "name": "Is Percent",
               "key": "isPercent",
               "type": "boolean",

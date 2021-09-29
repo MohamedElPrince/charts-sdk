@@ -17,7 +17,8 @@ const LiquidFillGauge = (props: ComponentProps) => {
       min: col.settings.min ?? 0,
       max: col.settings.max ?? 10 ** Math.ceil(Math.log10(data.value)),
       isPercent: col.settings.isPercent,
-      value: +data.value
+      value: +data.value,
+      formattedValue: data.formatted
     };
   });
 
@@ -28,6 +29,7 @@ const LiquidFillGauge = (props: ComponentProps) => {
           <LiquidFillGaugeComponent
             key={measure.id}
             currentValue={measure.value}
+            formattedValue={measure.formattedValue}
             minValue={measure.min}
             maxValue={measure.max}
             isPercent={measure.isPercent}
@@ -44,7 +46,8 @@ function LiquidFillGaugeComponent({
   currentValue = 50,
   minValue = 0,
   maxValue = 100,
-  isPercent = true
+  isPercent = true,
+  formattedValue = '0'
 }) {
   const ref = useRef();
 
@@ -207,18 +210,18 @@ function LiquidFillGaugeComponent({
 
     // Rounding functions so that the correct number of decimal places is always displayed as the value counts up.
     var textRounder = function (value) {
-      return Math.round(value);
+      return isPercent ? Math.round(value) : formattedValue;
     };
 
     if (parseFloat(textFinalValue) != parseFloat(textRounder(textFinalValue))) {
       textRounder = function (value) {
-        return parseFloat(value).toFixed(1);
+        return isPercent ? parseFloat(value).toFixed(1) : formattedValue;
       };
     }
 
     if (parseFloat(textFinalValue) != parseFloat(textRounder(textFinalValue))) {
       textRounder = function (value) {
-        return parseFloat(value).toFixed(2);
+        return isPercent ? parseFloat(value).toFixed(2) : formattedValue;
       };
     }
 
@@ -407,13 +410,20 @@ function LiquidFillGaugeComponent({
           animateWave(config.waveAnimateTime);
         });
     }
-  }, [chartValue, chartMaxValue, chartMinValue, isPercent]);
+  }, [chartValue, chartMaxValue, chartMinValue, isPercent, formattedValue]);
 
- return (
+  console.log({ formattedValue });
+
+  return (
     <div className="LiquidFillGaugeComponent">
       <div ref={ref} />
       <div className="LiquidFillGaugeComponent__info">
-        
+        <p>
+          <strong>Min:</strong> {chartMinValue} {isPercent ? '%' : ''}
+        </p>
+        <p>
+          <strong>Max:</strong> {chartMaxValue} {isPercent ? '%' : ''}
+        </p>
       </div>
     </div>
   );
