@@ -1,9 +1,15 @@
 /* add css module styles here (optional) */
 
-.test {
-  margin: 2em;
-  padding: 0.5em;
-  border: 2px solid #000;
-  font-size: 2em;
-  text-align: center;
+
+.SimpleKPI {
+  display: grid;
+  justify-content: center;
+  grid-template-rows: auto auto;
+  gap: 8px;
+}
+
+.SimpleKPI__wrapper {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }

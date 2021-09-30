@@ -1,7 +1,10 @@
 {
   "icon": "./assets/icon.png",
-  "name": "newComponent",
+  "name": "SimpleKPI",
   "hint": "",
+  "options": {
+    "aggregation": true
+  },
   "settings": [
     {
       "name": {
@@ -10,20 +13,23 @@
       "settings": [
         {
           "name": {
-            "key": "setting"
+            "key": "Max Groups"
           },
           "key": "key1",
-          "type": "boolean"
+          "type": "number"
         }
       ]
     }
   ],
   "bindingsTrays": [
     {
-      "key": "tray-key",
-      "name": {
-        "key": "tray"
+      "key": "dim",
+      "name": "Dimension",
+      "queryRole": "row"
       },
+      {
+      "key": "tray-key",
+      "name": "Hamada",
       "queryRole": "measure",
       "minCount": 1
     }
