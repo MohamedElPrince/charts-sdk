@@ -3,10 +3,16 @@
 import './styles.less';
 
 import React, { useEffect, useRef } from 'react';
-import { ComponentProps } from '@incorta-org/visual-sdk';
+import { ComponentProps } from '@incorta-org/component-sdk';
 import * as d3 from 'd3';
 
 const LiquidFillGauge = (props: ComponentProps) => {
+  console.log({ props, colors: props.insight.context.app.color_palette });
+
+  let chartConfig = {
+    color: props.insight.context.app.color_palette[0]
+  };
+
   const insightData = props.insight.data.data;
   const [aggregationData] = insightData;
 
@@ -33,6 +39,7 @@ const LiquidFillGauge = (props: ComponentProps) => {
             minValue={measure.min}
             maxValue={measure.max}
             isPercent={measure.isPercent}
+            chartConfig={chartConfig}
           />
         );
       })}
@@ -47,8 +54,11 @@ function LiquidFillGaugeComponent({
   minValue = 0,
   maxValue = 100,
   isPercent = true,
-  formattedValue = '0'
+  formattedValue = '0',
+  chartConfig
 }) {
+  console.log({ chartConfig });
+
   const ref = useRef();
 
   const chartMinValue = isPercent ? 0 : minValue;
@@ -101,7 +111,7 @@ function LiquidFillGaugeComponent({
     var $this = ref.current;
 
     var chartpaddingleft = 0;
-    var circlebordercolor = '#ee6b25';
+    var circlebordercolor = chartConfig.color;
     var circleborderthickness = 7;
     var circlecolor = 'transparent';
     var circlethickness = 0.12;
@@ -114,7 +124,7 @@ function LiquidFillGaugeComponent({
     var texthorzposition = 0;
     var textvertposition = 0.5;
     var waveanimatetime = 1000;
-    var wavecolor = '#ee6b25';
+    var wavecolor = chartConfig.color;
     var waveheightscaling = true;
     var waveopacity = 0.3;
     var wavetextcolor = 'red';
@@ -283,21 +293,6 @@ function LiquidFillGaugeComponent({
 
     var textLeftPlacement = parseInt(radius + config.textHorzPosition, 10);
 
-    if (config.displayText) {
-      // Text where the wave does not overlap.
-      var text1 = gaugeGroup
-        .append('text')
-        .text(textRounder(textStartValue) + percentText)
-        .attr('class', 'liquidFillGaugeText')
-        .attr('text-anchor', 'middle')
-        .attr('font-size', textPixels + 'px')
-        .style('fill', config.textColor)
-        .attr(
-          'transform',
-          'translate(' + textLeftPlacement + ',' + textRiseScaleY(config.textVertPosition) + ')'
-        );
-    }
-
     // The clipping wave area.
     var clipArea = d3
       .area()
@@ -337,22 +332,33 @@ function LiquidFillGaugeComponent({
       .style('fill', config.waveColor)
       .style('opacity', config.waveOpacity);
 
+    let textInterpolatorValue = textStartValue;
+
     if (config.displayText) {
-      // Text where the wave does overlap.
-      var text2 = fillCircleGroup
+      // Text where the wave does not overlap.
+      var text1 = gaugeGroup
         .append('text')
         .text(textRounder(textStartValue) + percentText)
         .attr('class', 'liquidFillGaugeText')
         .attr('text-anchor', 'middle')
         .attr('font-size', textPixels + 'px')
-        .style('fill', config.waveTextColor)
+        .attr('font-size', function () {
+          var bbox = this.getBBox(),
+            cbbox = { width: width - 30, height: height - 30 },
+            scale = Math.min(cbbox.width / bbox.width, cbbox.height / bbox.height);
+          return scale >= 1 ? textPixels : textPixels * scale;
+        })
+        .style('fill', config.textColor)
         .attr(
           'transform',
           'translate(' + textLeftPlacement + ',' + textRiseScaleY(config.textVertPosition) + ')'
-        );
+        )
+        .attr('stroke', 'white')
+        .attr('stroke-width', 1)
+        .attr('stroke-linecap', 'butt')
+        .attr('stroke-linejoin', 'miter')
+        .attr('font-weight', 900);
     }
-
-    let textInterpolatorValue = textStartValue;
 
     // Make the value count up.
     if (config.valueCountUp) {
@@ -363,14 +369,11 @@ function LiquidFillGaugeComponent({
           // Set the gauge's text with the new value and append the % sign
           // to the end
           text1.text(textInterpolatorValue + percentText);
-          text2.text(textInterpolatorValue + percentText);
         };
       };
 
       if (config.displayText) {
         text1.transition().duration(config.waveRiseTime).tween('text', textTween);
-
-        text2.transition().duration(config.waveRiseTime).tween('text', textTween);
       }
     }
 
