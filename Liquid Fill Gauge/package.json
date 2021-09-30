@@ -60,7 +60,7 @@
   },
   "files": ["dist"],
   "dependencies": {
-    "@incorta-org/visual-sdk": "file:/Users/incorta/incorta/visual-sdk",
+    "@incorta-org/component-sdk": "^0.0.1-alpha.1",
     "d3": "^7.0.4",
     "echarts": "^5.2.1",
     "echarts-liquidfill": "^3.1.0",
