@@ -16,7 +16,7 @@ const SimpleKPI = ({insight: { data, context } }: ComponentProps) => {
     let [dim,hamada] = col;
     return {
       row: dim.value,
-      value: +hamada.value
+      value: hamada.formatted
     };
   });
 console.log("formatted measure", formattedMeasures);

@@ -12,7 +12,7 @@ var SimpleKPI = function SimpleKPI(_ref) {
         hamada = col[1];
     return {
       row: dim.value,
-      value: +hamada.value
+      value: hamada.formatted
     };
   });
   console.log("formatted measure", formattedMeasures);
