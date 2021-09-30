@@ -32,6 +32,11 @@
           "name": "Min/Max",
           "settings": [
             {
+              "name": "Color",
+              "key": "color",
+              "type": "color"
+            },
+            {
               "name": "Format",
               "key": "format",
               "type": "number-format"

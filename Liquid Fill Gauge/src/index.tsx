@@ -7,11 +7,7 @@ import { ComponentProps } from '@incorta-org/component-sdk';
 import * as d3 from 'd3';
 
 const LiquidFillGauge = (props: ComponentProps) => {
-  console.log({ props, colors: props.insight.context.app.color_palette });
-
-  let chartConfig = {
-    color: props.insight.context.app.color_palette[0]
-  };
+  console.log({ props });
 
   const insightData = props.insight.data.data;
   const [aggregationData] = insightData;
@@ -20,28 +16,24 @@ const LiquidFillGauge = (props: ComponentProps) => {
     const data = aggregationData[index];
     return {
       id: col.id,
+      name: col.name,
       min: col.settings.min ?? 0,
       max: col.settings.max ?? 10 ** Math.ceil(Math.log10(data.value)),
       isPercent: col.settings.isPercent,
       value: +data.value,
-      formattedValue: data.formatted
+      formattedValue: data.formatted,
+      color: col.settings.color
     };
   });
 
   return (
     <div className="LiquidFillGauge__wrapper">
       {formattedMeasures.map(measure => {
-        return (
-          <LiquidFillGaugeComponent
-            key={measure.id}
-            currentValue={measure.value}
-            formattedValue={measure.formattedValue}
-            minValue={measure.min}
-            maxValue={measure.max}
-            isPercent={measure.isPercent}
-            chartConfig={chartConfig}
-          />
-        );
+        let chartConfig = {
+          ...measure,
+          color: measure.color ?? props.insight.context.app.color_palette[0]
+        };
+        return <LiquidFillGaugeComponent key={measure.id} chartConfig={chartConfig} />;
       })}
     </div>
   );
@@ -49,15 +41,16 @@ const LiquidFillGauge = (props: ComponentProps) => {
 
 export default LiquidFillGauge;
 
-function LiquidFillGaugeComponent({
-  currentValue = 50,
-  minValue = 0,
-  maxValue = 100,
-  isPercent = true,
-  formattedValue = '0',
-  chartConfig
-}) {
-  console.log({ chartConfig });
+function LiquidFillGaugeComponent({ chartConfig }) {
+  let {
+    color: chartColor,
+    value: currentValue = 50,
+    min: minValue = 0,
+    max: maxValue = 100,
+    isPercent = true,
+    formattedValue = '0',
+    name
+  } = chartConfig;
 
   const ref = useRef();
 
@@ -111,7 +104,7 @@ function LiquidFillGaugeComponent({
     var $this = ref.current;
 
     var chartpaddingleft = 0;
-    var circlebordercolor = chartConfig.color;
+    var circlebordercolor = chartColor;
     var circleborderthickness = 7;
     var circlecolor = 'transparent';
     var circlethickness = 0.12;
@@ -124,7 +117,7 @@ function LiquidFillGaugeComponent({
     var texthorzposition = 0;
     var textvertposition = 0.5;
     var waveanimatetime = 1000;
-    var wavecolor = chartConfig.color;
+    var wavecolor = chartColor;
     var waveheightscaling = true;
     var waveopacity = 0.3;
     var wavetextcolor = 'red';
@@ -413,20 +406,21 @@ function LiquidFillGaugeComponent({
           animateWave(config.waveAnimateTime);
         });
     }
-  }, [chartValue, chartMaxValue, chartMinValue, isPercent, formattedValue]);
-
-  console.log({ formattedValue });
+  }, [chartValue, chartMaxValue, chartMinValue, isPercent, formattedValue, chartColor]);
 
   return (
     <div className="LiquidFillGaugeComponent">
       <div ref={ref} />
       <div className="LiquidFillGaugeComponent__info">
         <p>
+          <strong>{name}</strong>
+        </p>
+        {/* <p>
           <strong>Min:</strong> {chartMinValue} {isPercent ? '%' : ''}
         </p>
         <p>
           <strong>Max:</strong> {chartMaxValue} {isPercent ? '%' : ''}
-        </p>
+        </p> */}
       </div>
     </div>
   );
