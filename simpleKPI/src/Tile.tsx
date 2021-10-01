@@ -5,9 +5,10 @@ interface TileProps {
   dim: string;
   measure1: string;
   measure2: string;
+  iconURL: string
 }
 
-export const Tile: React.FC<TileProps> = ({ dim: coinId, measure1: aggPosition, measure2: price }) => {
+export const Tile: React.FC<TileProps> = ({ dim: coinId, measure1: aggPosition, measure2: price, iconURL: iconURL}) => {
 
   // TODO: Make the overall tile narrower and or responsive
   const renderCoinData = () => {
@@ -19,7 +20,7 @@ export const Tile: React.FC<TileProps> = ({ dim: coinId, measure1: aggPosition, 
         <div className="percentChange">
         {price}%
         </div>
-        <img className="icon" src={'https://www.intrafocus.com/wp-content/uploads/2021/08/Intrafocus-i-Logo.jpg'} />
+        <img className="icon" src={iconURL} />
         {/* <div className="tradingPair">
           {response.data.symbol.toUpperCase()}
           <span className="lighter">/{iso_4217_code}</span>

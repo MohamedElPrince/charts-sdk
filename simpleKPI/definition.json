@@ -17,6 +17,11 @@
           },
           "key": "maxTiles",
           "type": "number"
+        },
+        {
+          "name": "icon URL",
+          "key": "iconURL",
+          "type": "text"
         }
       ]
     }

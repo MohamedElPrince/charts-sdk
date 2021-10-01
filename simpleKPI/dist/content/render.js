@@ -3,7 +3,8 @@ var React  = window.React;
 var Tile = function Tile(_ref) {
   var coinId = _ref.dim,
       aggPosition = _ref.measure1,
-      price = _ref.measure2;
+      price = _ref.measure2,
+      iconURL = _ref.iconURL;
 
   // TODO: Make the overall tile narrower and or responsive
   var renderCoinData = function renderCoinData() {
@@ -15,7 +16,7 @@ var Tile = function Tile(_ref) {
       className: "percentChange"
     }, price, "%"), /*#__PURE__*/React.createElement("img", {
       className: "icon",
-      src: 'https://www.intrafocus.com/wp-content/uploads/2021/08/Intrafocus-i-Logo.jpg'
+      src: iconURL
     }), /*#__PURE__*/React.createElement("div", {
       className: "price"
     }, price, /*#__PURE__*/React.createElement("span", {
@@ -35,18 +36,23 @@ var Tile = function Tile(_ref) {
 //// @ts-nocheck
 
 var SimpleKPI = function SimpleKPI(_ref) {
+  var _context$insight$sett;
+
   var _ref$insight = _ref.insight,
-      data = _ref$insight.data;
-  console.log(data.data);
+      data = _ref$insight.data,
+      context = _ref$insight.context;
+  console.log((_context$insight$sett = context.insight.settings) == null ? void 0 : _context$insight$sett.iconURL);
   var formattedMeasures = data.data.map(function (col, index) {
-    console.log(col);
+    var _context$insight$sett2;
+
     var dim = col[0],
         measure1 = col[1],
         measure2 = col[2];
     return {
       row: dim.value,
       value: String(measure1.formatted),
-      value2: String(measure2.formatted)
+      value2: String(measure2.formatted),
+      iconURL: (_context$insight$sett2 = context.insight.settings) == null ? void 0 : _context$insight$sett2.iconURL
     };
   });
   return /*#__PURE__*/React.createElement("div", {
@@ -55,7 +61,8 @@ var SimpleKPI = function SimpleKPI(_ref) {
     return /*#__PURE__*/React.createElement(Tile, {
       dim: response.row,
       measure1: response.value,
-      measure2: response.value2
+      measure2: response.value2,
+      iconURL: response.iconURL
     });
   }));
 };

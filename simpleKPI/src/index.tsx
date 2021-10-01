@@ -9,16 +9,16 @@ const SimpleKPI = ({insight: { data, context } }: ComponentProps) => {
   const insightData = data.data;
   const [aggregationData] = insightData;
 
-  console.log(data.data);
+  console.log(context.insight.settings?.iconURL);
 
   const formattedMeasures = data.data.map((col, index) => {
-    console.log(col);
 
     let [dim,measure1, measure2] = col;
     return {
       row: dim.value,
       value: String(measure1.formatted),
-      value2: String(measure2.formatted)
+      value2: String(measure2.formatted),
+      iconURL: context.insight.settings?.iconURL
     };
   });
 
@@ -28,7 +28,9 @@ const SimpleKPI = ({insight: { data, context } }: ComponentProps) => {
         return (
           <Tile dim = {response.row}
           measure1 = {response.value}
-          measure2 = {response.value2} />
+          measure2 = {response.value2}
+          iconURL = {response.iconURL} 
+          />
         );
       })}
     </div>
