@@ -3,6 +3,7 @@
 import React from 'react';
 import { ComponentProps } from '@incorta-org/component-sdk';
 import './styles.less';
+import { Tile } from './Tile';
 
 const SimpleKPI = ({insight: { data, context } }: ComponentProps) => {
   const insightData = data.data;
@@ -16,22 +17,35 @@ const SimpleKPI = ({insight: { data, context } }: ComponentProps) => {
     let [dim,measure1, measure2] = col;
     return {
       row: dim.value,
-      value: measure1.formatted,
-      value2: measure2.formatted
+      value: String(measure1.formatted),
+      value2: String(measure2.formatted)
     };
   });
-console.log("formatted measure", formattedMeasures);
 
   return (
     <div className="SimpleKPI__wrapper">
       {formattedMeasures.map(response => {
         return (
-          <div> <strong>{response.row}:</strong> {response.value}, {response.value2}
-          </div>
+          <Tile dim = {response.row}
+          measure1 = {response.value}
+          measure2 = {response.value2} />
         );
       })}
     </div>
   );
-};
+}
 
 export default SimpleKPI;
+
+
+// export default function Card(){
+//   return (
+//     <>
+//       {SimpleKPI.map(SimpleKPI => (
+//         <Card row = {dim.value},
+//         value = {measure1.formatted},
+//         value2 = {measure2.formatted} />
+//       ))}
+//     </>
+//   )
+// }

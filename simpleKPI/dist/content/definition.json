@@ -31,12 +31,36 @@
       "key": "tray-key",
       "name": "measure1",
       "queryRole": "measure",
-      "minCount": 1
+      "minCount": 1,
+      "settings": [
+        {
+          "name": "Number Format",
+          "settings": [
+            {
+              "name": "Format",
+              "key": "format",
+              "type": "number-format"
+            }
+          ]
+        }
+      ]
     },
     {
     "key": "tray-key2",
     "name": "measure2",
-    "queryRole": "measure"
+    "queryRole": "measure",
+    "settings": [
+      {
+        "name": "Number Format",
+        "settings": [
+          {
+            "name": "Format",
+            "key": "format",
+            "type": "number-format"
+          }
+        ]
+      }
+    ]
   }
   ]
 }
