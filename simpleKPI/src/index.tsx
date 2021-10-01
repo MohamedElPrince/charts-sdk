@@ -13,10 +13,11 @@ const SimpleKPI = ({insight: { data, context } }: ComponentProps) => {
   const formattedMeasures = data.data.map((col, index) => {
     console.log(col);
 
-    let [dim,hamada] = col;
+    let [dim,measure1, measure2] = col;
     return {
       row: dim.value,
-      value: hamada.formatted
+      value: measure1.formatted,
+      value2: measure2.formatted
     };
   });
 console.log("formatted measure", formattedMeasures);
@@ -25,7 +26,7 @@ console.log("formatted measure", formattedMeasures);
     <div className="SimpleKPI__wrapper">
       {formattedMeasures.map(response => {
         return (
-          <div> <strong>{response.row}:</strong> {response.value}
+          <div> <strong>{response.row}:</strong> {response.value}, {response.value2}
           </div>
         );
       })}

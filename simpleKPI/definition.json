@@ -13,9 +13,9 @@
       "settings": [
         {
           "name": {
-            "key": "Max Groups"
+            "key": "Max Tiles"
           },
-          "key": "key1",
+          "key": "maxTiles",
           "type": "number"
         }
       ]
@@ -29,9 +29,14 @@
       },
       {
       "key": "tray-key",
-      "name": "Hamada",
+      "name": "measure1",
       "queryRole": "measure",
       "minCount": 1
-    }
+    },
+    {
+    "key": "tray-key2",
+    "name": "measure2",
+    "queryRole": "measure"
+  }
   ]
 }
