@@ -332,14 +332,16 @@ function LiquidFillGaugeComponent({ chartConfig }) {
       var text1 = gaugeGroup
         .append('text')
         .text(textRounder(textStartValue) + percentText)
+        // .data({})
         .attr('class', 'liquidFillGaugeText')
         .attr('text-anchor', 'middle')
         .attr('font-size', textPixels + 'px')
-        .attr('font-size', function () {
+        .attr('font-size', function (d) {
           var bbox = this.getBBox(),
             cbbox = { width: width - 30, height: height - 30 },
             scale = Math.min(cbbox.width / bbox.width, cbbox.height / bbox.height);
-          return scale >= 1 ? textPixels : textPixels * scale;
+          let textScale = scale >= 1 ? 1 : scale;
+          return textScale * textPixels;
         })
         .style('fill', config.textColor)
         .attr(
@@ -350,7 +352,8 @@ function LiquidFillGaugeComponent({ chartConfig }) {
         .attr('stroke-width', 1)
         .attr('stroke-linecap', 'butt')
         .attr('stroke-linejoin', 'miter')
-        .attr('font-weight', 900);
+        .attr('font-weight', 900)
+        .attr('font-family', 'Roboto');
     }
 
     // Make the value count up.
