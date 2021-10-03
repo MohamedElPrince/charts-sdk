@@ -1,7 +1,10 @@
 {
   "icon": "./assets/icon.png",
-  "name": "newComponent",
+  "name": "SimpleKPI",
   "hint": "",
+  "options": {
+    "aggregation": true
+  },
   "settings": [
     {
       "name": {
@@ -10,22 +13,61 @@
       "settings": [
         {
           "name": {
-            "key": "setting"
+            "key": "Max Tiles"
           },
-          "key": "key1",
-          "type": "boolean"
+          "key": "maxTiles",
+          "type": "number"
+        },
+        {
+          "name": "icon URL",
+          "key": "iconURL",
+          "type": "text"
         }
       ]
     }
   ],
   "bindingsTrays": [
     {
-      "key": "tray-key",
-      "name": {
-        "key": "tray"
+      "key": "dim",
+      "name": "Dimension",
+      "queryRole": "row",
+      "default": ""
       },
+      {
+      "key": "tray-key",
+      "name": "measure1",
       "queryRole": "measure",
-      "minCount": 1
-    }
+      "minCount": 1,
+      "settings": [
+        {
+          "name": "Number Format",
+          "settings": [
+            {
+              "name": "Format",
+              "key": "format",
+              "type": "number-format"
+            }
+          ]
+        }
+      ]
+    },
+    {
+    "key": "tray-key2",
+    "name": "measure2",
+    "queryRole": "measure",
+    "default": "",
+    "settings": [
+      {
+        "name": "Number Format",
+        "settings": [
+          {
+            "name": "Format",
+            "key": "format",
+            "type": "number-format"
+          }
+        ]
+      }
+    ]
+  }
   ]
 }
