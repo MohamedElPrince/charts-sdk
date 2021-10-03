@@ -36,14 +36,11 @@ var Tile = function Tile(_ref) {
 //// @ts-nocheck
 
 var SimpleKPI = function SimpleKPI(_ref) {
-  var _context$insight$sett;
-
   var _ref$insight = _ref.insight,
       data = _ref$insight.data,
       context = _ref$insight.context;
-  console.log((_context$insight$sett = context.insight.settings) == null ? void 0 : _context$insight$sett.iconURL);
   var formattedMeasures = data.data.map(function (col, index) {
-    var _context$insight$sett2;
+    var _context$insight$sett;
 
     var dim = col[0],
         measure1 = col[1],
@@ -52,7 +49,7 @@ var SimpleKPI = function SimpleKPI(_ref) {
       row: dim.value,
       value: String(measure1.formatted),
       value2: String(measure2.formatted),
-      iconURL: (_context$insight$sett2 = context.insight.settings) == null ? void 0 : _context$insight$sett2.iconURL
+      iconURL: (_context$insight$sett = context.insight.settings) == null ? void 0 : _context$insight$sett.iconURL
     };
   });
   return /*#__PURE__*/React.createElement("div", {
@@ -61,21 +58,11 @@ var SimpleKPI = function SimpleKPI(_ref) {
     return /*#__PURE__*/React.createElement(Tile, {
       dim: response.row,
       measure1: response.value,
-      measure2: response.value2,
-      iconURL: response.iconURL
+      measure2: response.value2 || '{1}',
+      iconURL: response.iconURL || 'https://www.pngkey.com/png/full/675-6751777_general-info-icon.png'
     });
   }));
 };
-//   return (
-//     <>
-//       {SimpleKPI.map(SimpleKPI => (
-//         <Card row = {dim.value},
-//         value = {measure1.formatted},
-//         value2 = {measure2.formatted} />
-//       ))}
-//     </>
-//   )
-// }
 
 export { SimpleKPI as default };
 //# sourceMappingURL=render.modern.js.map

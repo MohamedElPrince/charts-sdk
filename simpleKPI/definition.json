@@ -30,7 +30,8 @@
     {
       "key": "dim",
       "name": "Dimension",
-      "queryRole": "row"
+      "queryRole": "row",
+      "default": ""
       },
       {
       "key": "tray-key",
@@ -54,6 +55,7 @@
     "key": "tray-key2",
     "name": "measure2",
     "queryRole": "measure",
+    "default": "",
     "settings": [
       {
         "name": "Number Format",

@@ -9,8 +9,6 @@ const SimpleKPI = ({insight: { data, context } }: ComponentProps) => {
   const insightData = data.data;
   const [aggregationData] = insightData;
 
-  console.log(context.insight.settings?.iconURL);
-
   const formattedMeasures = data.data.map((col, index) => {
 
     let [dim,measure1, measure2] = col;
@@ -28,26 +26,15 @@ const SimpleKPI = ({insight: { data, context } }: ComponentProps) => {
         return (
           <Tile dim = {response.row}
           measure1 = {response.value}
-          measure2 = {response.value2}
-          iconURL = {response.iconURL} 
+          measure2 = {response.value2 || '{1}'}
+          iconURL = {response.iconURL || 'https://www.pngkey.com/png/full/675-6751777_general-info-icon.png'} 
           />
         );
       })}
+
+
     </div>
   );
 }
 
 export default SimpleKPI;
-
-
-// export default function Card(){
-//   return (
-//     <>
-//       {SimpleKPI.map(SimpleKPI => (
-//         <Card row = {dim.value},
-//         value = {measure1.formatted},
-//         value2 = {measure2.formatted} />
-//       ))}
-//     </>
-//   )
-// }
