@@ -260,10 +260,14 @@ function LiquidFillGaugeComponent({ chartConfig }) {
       .domain([0, 1]);
 
     // Scale for controlling the position of the text within the gauge.
-    var textRiseScaleY = d3
-      .scaleLinear()
-      .range([fillCircleMargin + fillCircleRadius * 2, fillCircleMargin + textPixels * 0.7])
-      .domain([0, 1]);
+    var textRiseScaleY = textScale =>
+      d3
+        .scaleLinear()
+        .range([
+          fillCircleMargin + fillCircleRadius * 2,
+          fillCircleMargin + textScale * textPixels * 0.7
+        ])
+        .domain([0, 1]);
 
     // Center the gauge within the parent SVG.
     var gaugeGroup = gauge
@@ -329,6 +333,7 @@ function LiquidFillGaugeComponent({ chartConfig }) {
 
     if (config.displayText) {
       // Text where the wave does not overlap.
+      let textScale;
       var text1 = gaugeGroup
         .append('text')
         .text(textRounder(textStartValue) + percentText)
@@ -340,13 +345,17 @@ function LiquidFillGaugeComponent({ chartConfig }) {
           var bbox = this.getBBox(),
             cbbox = { width: width - 30, height: height - 30 },
             scale = Math.min(cbbox.width / bbox.width, cbbox.height / bbox.height);
-          let textScale = scale >= 1 ? 1 : scale;
+          textScale = scale >= 1 ? 1 : scale;
           return textScale * textPixels;
         })
         .style('fill', config.textColor)
         .attr(
           'transform',
-          'translate(' + textLeftPlacement + ',' + textRiseScaleY(config.textVertPosition) + ')'
+          'translate(' +
+            textLeftPlacement +
+            ',' +
+            textRiseScaleY(textScale)(config.textVertPosition) +
+            ')'
         )
         .attr('stroke', 'white')
         .attr('stroke-width', 1)
