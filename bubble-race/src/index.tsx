@@ -10,6 +10,42 @@ import data from './data.json';
 const BubbleRace = (props: ComponentProps) => {
   console.log(props);
 
+  let { context, data: incortaData } = props.insight;
+
+  let chartData = incortaData.data.map(([name, date, ...values]) => {
+    let {
+      name: nameBinding,
+      period: periodBinding,
+      value: valuesBinding
+    } = context.insight.bindings;
+    // console.log({ name, date, values });
+    // console.log({ nameBinding, periodBinding, valuesBinding });
+
+    return {
+      date: date.formatted,
+      name: {
+        name: nameBinding[0].name,
+        value: name.value
+      },
+      values: values.map((value, i) => ({
+        name: valuesBinding[i].name,
+        value: value.value
+      }))
+    };
+  });
+
+  let datesData = {};
+  let datesRange = [];
+
+  chartData.forEach(row => {
+    if (!(row.date in datesData)) {
+      datesRange.push(row.date);
+    }
+    datesData[row.date] = datesData[row.date] ? [...datesData[row.date], row] : [row];
+  });
+
+  console.log({ chartData, datesData, datesRange });
+
   let ref = useRef(null);
 
   useEffect(() => {
@@ -62,7 +98,6 @@ const BubbleRace = (props: ComponentProps) => {
 
     function valueAt(values, date) {
       const i = bisectDate(values, date, 0, values.length - 1);
-      console.log({ i, date, values });
       const a = values[i];
       if (i > 0) {
         const b = values[i - 1];
@@ -73,13 +108,17 @@ const BubbleRace = (props: ComponentProps) => {
     }
 
     function dataAt(date) {
-      return data.map(d => ({
+      let row = data.map(d => ({
         name: d.name,
         region: d.region,
         income: valueAt(d.income, date),
         population: valueAt(d.population, date),
         lifeExpectancy: valueAt(d.lifeExpectancy, date)
       }));
+
+      console.log({ row });
+
+      return row;
     }
 
     let grid = g =>
@@ -180,7 +219,6 @@ const BubbleRace = (props: ComponentProps) => {
 
       return Object.assign(svg.node(), {
         update(data) {
-          // console.log({ data });
           circle
             .data(data, d => d.name)
             .sort((a, b) => d3.descending(a.population, b.population))
@@ -192,15 +230,15 @@ const BubbleRace = (props: ComponentProps) => {
     }
 
     // looping
-    let i = start + 1;
-    let id = setInterval(() => {
-      let currentData = dataAt(i);
-      chart.update(currentData);
-      i++;
-      if (i > end) {
-        clearInterval(id);
-      }
-    }, 100);
+    // let i = start + 1;
+    // let id = setInterval(() => {
+    //   let currentData = dataAt(i);
+    //   chart.update(currentData);
+    //   i++;
+    //   if (i > end) {
+    //     clearInterval(id);
+    //   }
+    // }, 100);
 
     return () => {
       clearInterval(id);
