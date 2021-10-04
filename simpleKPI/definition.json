@@ -21,7 +21,8 @@
         {
           "name": "icon URL",
           "key": "iconURL",
-          "type": "text"
+          "type": "text",
+          "default": "https://www.pngkey.com/png/full/675-6751777_general-info-icon.png"
         }
       ]
     }
@@ -45,7 +46,8 @@
             {
               "name": "Format",
               "key": "format",
-              "type": "number-format"
+              "type": "number-format",
+              "default": "###,###"
             }
           ]
         }
@@ -63,7 +65,8 @@
           {
             "name": "Format",
             "key": "format",
-            "type": "number-format"
+            "type": "number-format",
+            "default": "###,###"
           }
         ]
       }

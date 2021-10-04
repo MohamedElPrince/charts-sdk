@@ -8,7 +8,7 @@ interface TileProps {
   iconURL: string
 }
 
-export const Tile: React.FC<TileProps> = ({ dim: coinId, measure1: aggPosition, measure2: price, iconURL: iconURL}) => {
+export const Tile: React.FC<TileProps> = ({ dim: coinId, measure1: price, measure2: priceChange, iconURL: iconURL}) => {
 
   // TODO: Make the overall tile narrower and or responsive
   const renderCoinData = () => {
@@ -17,24 +17,13 @@ export const Tile: React.FC<TileProps> = ({ dim: coinId, measure1: aggPosition, 
     return Response ? (
       <>
         <div className="coinName">{coinId}</div>
-        <div className="percentChange">
-        {price}%
-        </div>
         <img className="icon" src={iconURL} />
-        {/* <div className="tradingPair">
-          {response.data.symbol.toUpperCase()}
-          <span className="lighter">/{iso_4217_code}</span>
-        </div> */}
         <div className="price">
           {price}
           <span className="currency">{iso_4217_code}</span>
         </div>
         <div className="priceChange">
-          {aggPosition}
-        </div>
-        <div className="value">
-          Mkt Value:{' '}
-          {price}
+          {priceChange}
         </div>
       </>
     ) : (
