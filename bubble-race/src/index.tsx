@@ -12,6 +12,8 @@ const BubbleRace = (props: ComponentProps) => {
   let { context, data: incortaData } = props.insight;
   let { name: nameBinding, period: periodBinding, value: valuesBinding } = context.insight.bindings;
 
+  let { duration } = context.insight.settings;
+
   let chartData = useMemo(() => {
     return incortaData.data.map(([name, date, ...values]) => {
       return {
@@ -125,7 +127,7 @@ const BubbleRace = (props: ComponentProps) => {
     );
     let radius = d3.scaleSqrt(
       [0, d3.max(chartData.map(row => row.values[2].value))],
-      [0, width / 12]
+      [0, d3.min([width, height]) / 8]
     );
 
     let chart = getChart();
@@ -175,12 +177,12 @@ const BubbleRace = (props: ComponentProps) => {
       }
       chart.update(datesData[datesRange[i]]);
       i++;
-    }, 500);
+    }, duration);
 
     return () => {
       clearInterval(id);
     };
-  }, [width, height, chartData, datesData, datesRange]);
+  }, [width, height, chartData, datesData, datesRange, duration]);
 
   return <div ref={ref}></div>;
 };

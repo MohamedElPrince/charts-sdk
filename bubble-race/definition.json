@@ -12,11 +12,10 @@
       },
       "settings": [
         {
-          "name": {
-            "key": "setting"
-          },
-          "key": "key1",
-          "type": "boolean"
+          "name": "Duration",
+          "key": "duration",
+          "type": "number",
+          "defaultValue": 500
         }
       ]
     }
