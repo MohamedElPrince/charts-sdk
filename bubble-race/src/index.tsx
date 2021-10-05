@@ -1,48 +1,46 @@
 // @ts-nocheck
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { ComponentProps } from '@incorta-org/component-sdk';
 import './styles.less';
 import * as d3 from 'd3';
 
-import data from './data.json';
-
 const BubbleRace = (props: ComponentProps) => {
-  console.log(props);
+  console.log({ props });
 
+  let { width, height } = props.dimensions;
   let { context, data: incortaData } = props.insight;
+  let { name: nameBinding, period: periodBinding, value: valuesBinding } = context.insight.bindings;
 
-  let chartData = incortaData.data.map(([name, date, ...values]) => {
-    let {
-      name: nameBinding,
-      period: periodBinding,
-      value: valuesBinding
-    } = context.insight.bindings;
-    // console.log({ name, date, values });
-    // console.log({ nameBinding, periodBinding, valuesBinding });
+  let chartData = useMemo(() => {
+    return incortaData.data.map(([name, date, ...values]) => {
+      return {
+        date: date.formatted,
+        name: {
+          name: nameBinding[0].name,
+          value: name.value
+        },
+        values: values.map((value, i) => ({
+          name: valuesBinding[i].name,
+          value: +value.value
+        }))
+      };
+    });
+  }, [incortaData]);
 
-    return {
-      date: date.formatted,
-      name: {
-        name: nameBinding[0].name,
-        value: name.value
-      },
-      values: values.map((value, i) => ({
-        name: valuesBinding[i].name,
-        value: value.value
-      }))
-    };
-  });
+  let [datesData, datesRange] = useMemo(() => {
+    let datesData = {};
+    let datesRange = [];
 
-  let datesData = {};
-  let datesRange = [];
+    chartData.forEach(row => {
+      if (!(row.date in datesData)) {
+        datesRange.push(row.date);
+      }
+      datesData[row.date] = datesData[row.date] ? [...datesData[row.date], row] : [row];
+    });
 
-  chartData.forEach(row => {
-    if (!(row.date in datesData)) {
-      datesRange.push(row.date);
-    }
-    datesData[row.date] = datesData[row.date] ? [...datesData[row.date], row] : [row];
-  });
+    return [datesData, datesRange];
+  }, [chartData]);
 
   console.log({ chartData, datesData, datesRange });
 
@@ -52,74 +50,7 @@ const BubbleRace = (props: ComponentProps) => {
     // clear
     ref.current.innerHTML = '';
 
-    let width = 800;
-    let height = 560;
     let margin = { top: 20, right: 20, bottom: 35, left: 40 };
-    let bisectDate = d3.bisector(([date]) => date).left;
-
-    function parseSeries(series) {
-      return series.map(([year, value]) => [new Date(Date.UTC(year, 0, 1)), value]);
-    }
-
-    // let interval = d3.utcMonth;
-
-    // let dates = interval.range(
-    //   d3.min(data, d => {
-    //     return d3.min([d.income[0], d.population[0], d.lifeExpectancy[0]], ([date]) => date);
-    //   }),
-    //   d3.min(data, d => {
-    //     return d3.max(
-    //       [
-    //         d.income[d.income.length - 1],
-    //         d.population[d.population.length - 1],
-    //         d.lifeExpectancy[d.lifeExpectancy.length - 1]
-    //       ],
-    //       ([date]) => date
-    //     );
-    //   })
-    // );
-
-    // console.log({
-    //   dates,
-    //   min: d3.min(data, d => {
-    //     return d3.min([d.income[0], d.population[0], d.lifeExpectancy[0]], ([date]) => date);
-    //   }),
-    //   max: d3.min(data, d => {
-    //     return d3.max(
-    //       [
-    //         d.income[d.income.length - 1],
-    //         d.population[d.population.length - 1],
-    //         d.lifeExpectancy[d.lifeExpectancy.length - 1]
-    //       ],
-    //       ([date]) => date
-    //     );
-    //   })
-    // });
-
-    function valueAt(values, date) {
-      const i = bisectDate(values, date, 0, values.length - 1);
-      const a = values[i];
-      if (i > 0) {
-        const b = values[i - 1];
-        const t = (date - a[0]) / (b[0] - a[0]);
-        return a[1] * (1 - t) + b[1] * t;
-      }
-      return a[1];
-    }
-
-    function dataAt(date) {
-      let row = data.map(d => ({
-        name: d.name,
-        region: d.region,
-        income: valueAt(d.income, date),
-        population: valueAt(d.population, date),
-        lifeExpectancy: valueAt(d.lifeExpectancy, date)
-      }));
-
-      console.log({ row });
-
-      return row;
-    }
 
     let grid = g =>
       g
@@ -160,7 +91,7 @@ const BubbleRace = (props: ComponentProps) => {
             .attr('y', 10)
             .attr('fill', 'currentColor')
             .attr('text-anchor', 'start')
-            .text('↑ Life expectancy (years)')
+            .text(`↑ ${valuesBinding[1].name}`)
         );
     let xAxis = g =>
       g
@@ -174,26 +105,32 @@ const BubbleRace = (props: ComponentProps) => {
             .attr('y', margin.bottom - 4)
             .attr('fill', 'currentColor')
             .attr('text-anchor', 'end')
-            .text('Income per capita (dollars) →')
+            .text(`${valuesBinding[0].name} →`)
         );
 
     let color = d3
       .scaleOrdinal(
-        data.map(d => d.region),
+        chartData.map(d => d.name.value),
         d3.schemeCategory10
       )
       .unknown('black');
-    let radius = d3.scaleSqrt([0, 5e8], [0, width / 24]);
 
-    let x = d3.scaleLog([200, 1e5], [margin.left, width - margin.right]);
-    let y = d3.scaleLinear([14, 86], [height - margin.bottom, margin.top]);
+    let x = d3.scaleLinear(
+      [0, d3.max(chartData.map(row => row.values[0].value))],
+      [margin.left, width - margin.right]
+    );
+    let y = d3.scaleLinear(
+      [0, d3.max(chartData.map(row => row.values[1].value))],
+      [height - margin.bottom, margin.top]
+    );
+    let radius = d3.scaleSqrt(
+      [0, d3.max(chartData.map(row => row.values[2].value))],
+      [0, width / 12]
+    );
 
     let chart = getChart();
 
     ref.current.appendChild(chart);
-
-    let start = 1800;
-    let end = 2005;
 
     function getChart() {
       const svg = d3.create('svg').attr('viewBox', [0, 0, width, height]);
@@ -208,42 +145,42 @@ const BubbleRace = (props: ComponentProps) => {
         .append('g')
         .attr('stroke', 'black')
         .selectAll('circle')
-        .data(dataAt(2005), d => d.name)
+        .data(datesData[datesRange[0]], d => d.name.value)
         .join('circle')
-        .sort((a, b) => d3.descending(a.population, b.population))
-        .attr('cx', d => x(d.income))
-        .attr('cy', d => y(d.lifeExpectancy))
-        .attr('r', d => radius(d.population))
-        .attr('fill', d => color(d.region))
-        .call(circle => circle.append('title').text(d => [d.name, d.region].join('\n')));
+        .sort((a, b) => d3.descending(a.values[2].value, b.values[2].value))
+        .attr('cx', d => x(d.values[0].value))
+        .attr('cy', d => y(d.values[1].value))
+        .attr('r', d => radius(d.values[2].value))
+        .attr('fill', d => color(d.name.value))
+        .call(circle => circle.append('title').text(d => [d.name.name, d.name.value].join('\n')));
 
       return Object.assign(svg.node(), {
         update(data) {
           circle
-            .data(data, d => d.name)
-            .sort((a, b) => d3.descending(a.population, b.population))
-            .attr('cx', d => x(d.income))
-            .attr('cy', d => y(d.lifeExpectancy))
-            .attr('r', d => radius(d.population));
+            .data(data, d => d.name.value)
+            .sort((a, b) => d3.descending(a.values[2].value, b.values[2].value))
+            .attr('cx', d => x(d.values[0].value))
+            .attr('cy', d => y(d.values[1].value))
+            .attr('r', d => radius(d.values[2].value));
         }
       });
     }
 
     // looping
-    // let i = start + 1;
-    // let id = setInterval(() => {
-    //   let currentData = dataAt(i);
-    //   chart.update(currentData);
-    //   i++;
-    //   if (i > end) {
-    //     clearInterval(id);
-    //   }
-    // }, 100);
+    let i = 1;
+    let id = setInterval(() => {
+      if (i >= datesRange.length) {
+        clearInterval(id);
+        return;
+      }
+      chart.update(datesData[datesRange[i]]);
+      i++;
+    }, 500);
 
     return () => {
       clearInterval(id);
     };
-  }, []);
+  }, [width, height, chartData, datesData, datesRange]);
 
   return <div ref={ref}></div>;
 };
