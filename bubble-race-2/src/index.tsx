@@ -4,7 +4,10 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ComponentProps } from '@incorta-org/component-sdk';
 import './styles.less';
 import { Bubble } from 'react-chartjs-2';
-import _uniq from 'lodash/uniq';
+import _uniq from 'lodash/uniq/';
+import { FiPlay, FiPause } from 'react-icons/fi';
+import { Slider } from '@reach/slider';
+import '@reach/slider/styles.css';
 
 const BubbleRace = (props: ComponentProps) => {
   console.log({ props });
@@ -148,14 +151,17 @@ const BubbleRace = (props: ComponentProps) => {
       datesRange={datesRange}
       options={options}
       duration={duration}
+      label={timeBinding[0].name}
     />
   );
 };
 
-function BubbleRaceChart({ datesData, datesRange, options, duration }) {
+function BubbleRaceChart({ datesData, datesRange, options, duration, label }) {
   let hasColorCol = !!Object.values(datesData)[0];
 
-  let [date, setDate] = useState(datesRange[0]);
+  let [index, setIndex] = useState(0);
+
+  let date = datesRange[index];
 
   let data = datesData[date].map(item => {
     let c = item.colorBy;
@@ -202,25 +208,76 @@ function BubbleRaceChart({ datesData, datesRange, options, duration }) {
   }
 
   useEffect(() => {
-    setDate(datesRange[1]);
-  }, [datesData, datesRange]);
+    setIndex(0);
+  }, [datesRange]);
+
+  return (
+    <div className="Bubble-wrapper">
+      <div className="Bubble-chart">
+        <Bubble data={{ datasets }} options={options} />
+      </div>
+      <PlaySlider
+        label={label}
+        duration={duration}
+        max={datesRange.length - 1}
+        value={index}
+        valueLabel={date}
+        onChange={index => {
+          setIndex(index);
+        }}
+      />
+    </div>
+  );
+}
+
+function PlaySlider({ label, duration, onChange, value, max, valueLabel }) {
+  let [play, setPlay] = useState(true);
 
   useEffect(() => {
-    let i = 1;
-    let id = setInterval(() => {
-      if (i >= datesRange.length) {
-        clearInterval(id);
-        return;
+    if (play) {
+      if (value < max) {
+        let id = setTimeout(() => {
+          onChange(i => i + 1);
+        }, duration);
+        return () => {
+          clearTimeout(id);
+        };
+      } else {
+        setPlay(false);
       }
-      setDate(datesRange[i]);
-      i++;
-    }, duration);
-    return () => {
-      clearInterval(id);
-    };
-  }, [duration, datesData, datesRange]);
+    }
+  }, [play, value, duration]);
 
-  return <Bubble data={{ datasets }} options={options} />;
+  return (
+    <div className="PlaySlider">
+      <button
+        onClick={() => {
+          if (value >= max) {
+            onChange(0);
+          }
+          setPlay(f => !f);
+        }}
+      >
+        {play ? <FiPause /> : <FiPlay />}
+      </button>
+      <div className="PlaySlider-slider-wrapper">
+        <div className="PlaySlider-slider-label">
+          {label} = {valueLabel}
+        </div>
+        <div className="PlaySlider-slider">
+          <Slider
+            value={value}
+            onChange={n => {
+              onChange(n);
+            }}
+            step={1}
+            min={0}
+            max={max}
+          />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default BubbleRace;
