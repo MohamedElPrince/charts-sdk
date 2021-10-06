@@ -8,14 +8,10 @@ import { Tile } from './Tile';
 const SimpleKPI = ({ insight: { data, context } }: ComponentProps) => {
   const insightData = data.data;
   const [aggregationData] = insightData;
-  var maxTiles = Number(context.insight.settings?.maxTiles) || 4;
-  let tiles = 0;
 
   const formattedMeasures = data.data.map((col, index) => {
     let [dim, measure1, measure2] = col;
-    console.log('MAX TILES: ', { tiles }, { maxTiles });
 
-    tiles++;
     return {
       row: dim.value,
       value: String(measure1.formatted),
@@ -25,8 +21,6 @@ const SimpleKPI = ({ insight: { data, context } }: ComponentProps) => {
     };
   });
 
-  //FIXME: condition either show all or nothing
-  if (tiles <= maxTiles) {
     return (
       <div className="SimpleKPI__wrapper">
         {formattedMeasures.map(response => {
@@ -41,7 +35,6 @@ const SimpleKPI = ({ insight: { data, context } }: ComponentProps) => {
         })}
       </div>
     );
-  } else return null;
 };
 
 export default SimpleKPI;

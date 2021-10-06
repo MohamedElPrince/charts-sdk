@@ -1,38 +1,27 @@
 {
   "icon": "./assets/icon.png",
-  "name": "SimpleKPI",
+  "name": "DualKPI",
   "hint": "",
   "options": {
     "aggregation": true
   },
-  "settings": [
-    {
-      "name": {
-        "key": "group"
-      },
-      "settings": [
-        {
-          "name": {
-            "key": "Max Tiles"
-          },
-          "key": "maxTiles",
-          "type": "number"
-        },
-        {
-          "name": "icon URL",
-          "key": "iconURL",
-          "type": "text",
-          "defaultValue": "https://www.pngkey.com/png/full/675-6751777_general-info-icon.png"
-        }
-      ]
-    }
-  ],
   "bindingsTrays": [
     {
       "key": "dim",
       "name": "Dimension",
       "queryRole": "row",
-      "defaultValue": ""
+      "settings": [
+        {
+          "name": "Settings",
+          "settings": [
+            {
+              "name": "Sorting",
+              "key": "sort1",
+              "type": "sort"
+            }
+          ]
+        }
+      ]
       },
       {
       "key": "tray-key",
@@ -44,10 +33,30 @@
           "name": "Number Format",
           "settings": [
             {
+              "name": "Scale",
+              "key": "scale1",
+              "type": "scale"
+            },
+            {
               "name": "Format",
               "key": "format",
               "type": "number-format",
               "defaultValue": "###,###"
+            },
+            {
+              "name": "Conditional Formatting",
+              "key": "cond-format2",
+              "type": "conditional-formatting"
+            }
+          ]
+        },
+        {
+          "name": "Filters",
+          "settings": [
+            {
+              "name": "Filter",
+              "key": "filter1",
+              "type": "filter"
             }
           ]
         }
@@ -57,20 +66,39 @@
     "key": "tray-key2",
     "name": "measure2",
     "queryRole": "measure",
-    "defaultValue": "",
     "settings": [
       {
         "name": "Number Format",
         "settings": [
           {
+            "name": "Scale",
+            "key": "scale2",
+            "type": "scale"
+          },
+          {
             "name": "Format",
             "key": "format",
             "type": "number-format",
             "defaultValue": "###,###"
+          },
+          {
+            "name": "Conditional Formatting",
+            "key": "cond-format1",
+            "type": "conditional-formatting"
+          }
+        ]
+      },
+      {
+        "name": "Filters",
+        "settings": [
+          {
+            "name": "Filter",
+            "key": "filter2",
+            "type": "filter"
           }
         ]
       }
     ]
-  }
+    }
   ]
 }
