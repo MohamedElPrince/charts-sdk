@@ -15,7 +15,7 @@
           "name": "Duration",
           "key": "duration",
           "type": "number",
-          "defaultValue": 500
+          "defaultValue": 1000
         }
       ]
     }
@@ -26,6 +26,12 @@
       "name": "Name",
       "queryRole": "row",
       "minCount": 1,
+      "maxCount": 1
+    },
+    {
+      "key": "color",
+      "name": "Color",
+      "queryRole": "row",
       "maxCount": 1
     },
     {
@@ -48,8 +54,8 @@
       "maxCount": 3
     },
     {
-      "key": "period",
-      "name": "Period",
+      "key": "time",
+      "name": "Time",
       "queryRole": "row",
       "minCount": 1,
       "maxCount": 1
