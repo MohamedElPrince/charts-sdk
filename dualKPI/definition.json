@@ -1,6 +1,6 @@
 {
   "icon": "./assets/icon.png",
-  "name": "DualKPI",
+  "name": "Dual Dynamic KPI",
   "hint": "",
   "options": {
     "aggregation": true
