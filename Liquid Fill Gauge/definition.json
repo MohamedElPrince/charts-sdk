@@ -29,8 +29,13 @@
       "minCount": 1,
       "settings": [
         {
-          "name": "Min/Max",
+          "name": "Settings",
           "settings": [
+            {
+              "name": "Scale",
+              "key": "scale",
+              "type": "scale"
+            },
             {
               "name": "Color",
               "key": "color",
@@ -42,7 +47,7 @@
               "type": "number-format"
             },
             {
-              "name": "Is Percent",
+              "name": "Show Percent",
               "key": "isPercent",
               "type": "boolean",
               "defaultValue": true
@@ -56,6 +61,16 @@
               "key": "max",
               "name": "Max",
               "type": "number"
+            }
+          ]
+        },
+        {
+          "name": "Filter",
+          "settings": [
+            {
+              "name": "Filter",
+              "key": "filter1",
+              "type": "filter"
             }
           ]
         }
