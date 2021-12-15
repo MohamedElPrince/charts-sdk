@@ -1,11 +1,11 @@
 {
   "id": "4767419f-2c4d-435e-8dfa-ed1ba7c8d53b",
-  "version": "0.0.3",
-  "name": "new-component",
+  "version": "0.0.22",
+  "name": "Dynamic Dual KPI",
   "description": "",
   "author": {
-    "name": "dev",
-    "email": ""
+    "name": "Prince",
+    "email": "mohamed.elprince@incorta.com"
   },
   "license": "MIT",
   "repository": "",

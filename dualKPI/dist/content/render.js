@@ -13,11 +13,15 @@ var Tile = function Tile(_ref) {
       className: "price"
     }, price), /*#__PURE__*/React.createElement("div", {
       className: "separator"
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "arrow"
-    }, " \u25B2 "), /*#__PURE__*/React.createElement("div", {
-      className: "priceChange"
-    }, priceChange)) : '';
+    }), !priceChange.startsWith('-') ? /*#__PURE__*/React.createElement("div", {
+      className: "arrowUp"
+    }, " \u25B2 ") : /*#__PURE__*/React.createElement("div", {
+      className: "arrowDown"
+    }, " \u25BC "), !priceChange.startsWith('-') ? /*#__PURE__*/React.createElement("div", {
+      className: "priceChangeUp"
+    }, !priceChange.startsWith('-') ? priceChange : priceChange.substr(1)) : /*#__PURE__*/React.createElement("div", {
+      className: "priceChangeDown"
+    }, !priceChange.startsWith('-') ? priceChange : priceChange.substr(1))) : '';
   };
 
   return /*#__PURE__*/React.createElement("div", {
@@ -25,14 +29,13 @@ var Tile = function Tile(_ref) {
   }, renderCoinData());
 };
 
-//// @ts-nocheck
+// @ts-nocheck
 
 var SimpleKPI = function SimpleKPI(_ref) {
-  var _ref$insight = _ref.insight,
-      data = _ref$insight.data,
-      context = _ref$insight.context;
+  var data = _ref.response,
+      context = _ref.context;
   var formattedMeasures = data.data.map(function (col, index) {
-    var _context$insight$sett;
+    var _context$component$se;
 
     var dim = col[0],
         measure1 = col[1],
@@ -41,7 +44,7 @@ var SimpleKPI = function SimpleKPI(_ref) {
       row: dim.value,
       value: String(measure1.formatted),
       value2: String(measure2.formatted),
-      iconURL: (_context$insight$sett = context.insight.settings) == null ? void 0 : _context$insight$sett.iconURL
+      iconURL: (_context$component$se = context.component.settings) == null ? void 0 : _context$component$se.iconURL
     };
   });
   return /*#__PURE__*/React.createElement("div", {

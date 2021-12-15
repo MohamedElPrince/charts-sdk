@@ -23,10 +23,25 @@ export const Tile: React.FC<TileProps> = ({ dim: coinId, measure1: price, measur
           {/* <span className="currency">{iso_4217_code}</span> */}
         </div>
         <div className="separator"></div>
-        <div className="arrow"> &#x25B2; </div>
-        <div className="priceChange">
-          {priceChange}
+        {/* <div className="arrow"> &#x25B2; </div> */}
+        {!priceChange.startsWith('-') ? (
+          <div className="arrowUp"> &#x25B2; </div>
+        ) : (
+          <div className="arrowDown"> &#x25BC; </div>
+        )}
+
+
+        {!priceChange.startsWith('-') ? (
+        <div className="priceChangeUp">
+          {!priceChange.startsWith('-') ? priceChange : priceChange.substr(1)}
         </div>
+        ) : (
+          <div className="priceChangeDown">
+            {!priceChange.startsWith('-') ? priceChange : priceChange.substr(1)}
+          </div>
+        )}
+
+
       </>
     ) : (
       ''

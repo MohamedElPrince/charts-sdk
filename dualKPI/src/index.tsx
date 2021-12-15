@@ -1,11 +1,11 @@
-//// @ts-nocheck
+// @ts-nocheck
 
 import React from 'react';
-import { ComponentProps, Setting } from '@incorta-org/component-sdk';
+import { ComponentProps } from '@incorta-org/component-sdk';
 import './styles.less';
 import { Tile } from './Tile';
 
-const SimpleKPI = ({ insight: { data, context } }: ComponentProps) => {
+const SimpleKPI = ({ response: data, context }: ComponentProps) => {
   const insightData = data.data;
   const [aggregationData] = insightData;
 
@@ -16,25 +16,24 @@ const SimpleKPI = ({ insight: { data, context } }: ComponentProps) => {
       row: dim.value,
       value: String(measure1.formatted),
       value2: String(measure2.formatted),
-      iconURL:
-        context.insight.settings?.iconURL
+      iconURL: context.component.settings?.iconURL
     };
   });
 
-    return (
-      <div className="SimpleKPI__wrapper">
-        {formattedMeasures.map(response => {
-          return (
-            <Tile
-              dim={response.row}
-              measure1={response.value}
-              measure2={response.value2}
-              iconURL={response.iconURL}
-            />
-          );
-        })}
-      </div>
-    );
+  return (
+    <div className="SimpleKPI__wrapper">
+      {formattedMeasures.map(response => {
+        return (
+          <Tile
+            dim={response.row}
+            measure1={response.value}
+            measure2={response.value2}
+            iconURL={response.iconURL}
+          />
+        );
+      })}
+    </div>
+  );
 };
 
 export default SimpleKPI;
