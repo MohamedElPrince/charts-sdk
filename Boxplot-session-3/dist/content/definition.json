@@ -1,0 +1,74 @@
+{
+  "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iNCIgZmlsbD0iI0Y5RjlGOSIvPgo8cGF0aCBkPSJNMzUuMiAxOS42NkwyNi4zMiAyNC40OEMyNS41IDI0LjkyIDI1IDI1LjggMjUgMjYuNzhWMzYuMUMyNSAzNy4xIDI1Ljk4IDM3Ljc2IDI2LjggMzcuM0wzNS42OCAzMi40OEMzNi40OCAzMi4wNCAzNyAzMS4xNiAzNyAzMC4xOFYyMC44OEMzNyAxOS44NiAzNi4wMiAxOS4yMiAzNS4yIDE5LjY2Wk0yMS42OCAyNC40NkwxMi44IDE5LjY2QzExLjk4IDE5LjIyIDExIDE5Ljg2IDExIDIwLjg2VjMwLjIyQzExIDMxLjIgMTEuNSAzMi4wOCAxMi4zMiAzMi41MkwyMS4yIDM3LjMyQzIyLjAyIDM3Ljc2IDIzIDM3LjEgMjMgMzYuMVYyNi43NkMyMyAyNS43OCAyMi41IDI0LjkgMjEuNjggMjQuNDZaTTM0LjM4IDE3LjQ4QzM0LjggMTcuMjYgMzUgMTYuODggMzQuOTYgMTYuNTJDMzUgMTYuMTQgMzQuOCAxNS43OCAzNC4zOCAxNS41NkwyNS4zNCAxMC44NEMyNC45NCAxMC42MiAyNC40NiAxMC41MiAyMy45OCAxMC41MkMyMy41IDEwLjUyIDIzLjAyIDEwLjYyIDIyLjYyIDEwLjg0TDEzLjU4IDE1LjU0QzEzLjE2IDE1Ljc2IDEyLjk4IDE2LjE0IDEzIDE2LjVDMTIuOTggMTYuODggMTMuMTYgMTcuMjYgMTMuNTggMTcuNDhMMjIuNjIgMjIuMThDMjMuMDIgMjIuNCAyMy41IDIyLjUgMjMuOTggMjIuNUMyNC40NiAyMi41IDI0Ljk0IDIyLjQgMjUuMzQgMjIuMThMMzQuMzggMTcuNDhaIiBmaWxsPSIjOTlBNkIwIi8+Cjwvc3ZnPgo=",
+  "name": "Boxplot-session-3",
+  "hint": "This chart type needs 1 dimension and 3 measures",
+  "options": {
+    "aggregation": true,
+    "individualFilter": true
+  },
+  "settings": [
+    {
+      "name": {
+        "key": "Setting group"
+      },
+      "settings": [
+        {
+          "name": {
+            "key": "Name"
+          },
+          "key": "key1",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "bindingsTrays": [
+    {
+      "key": "tray-key",
+      "name": "Dimension",
+      "queryRole": "row",
+      "minCount": 1
+    },
+    {
+      "key": "tray-key1",
+      "name": {
+        "key": "Min"
+      },
+      "queryRole": "measure",
+      "minCount": 1,
+      "maxCount": 1
+    },
+    {
+      "key": "tray-key2",
+      "name": {
+        "key": "Q1"
+      },
+      "queryRole": "measure",
+      "minCount": 1
+    },
+    {
+      "key": "tray-key3",
+      "name": {
+        "key": "median"
+      },
+      "queryRole": "measure",
+      "minCount": 1
+    },
+    {
+      "key": "tray-key4",
+      "name": {
+        "key": "Q3"
+      },
+      "queryRole": "measure",
+      "minCount": 1
+    },
+    {
+      "key": "tray-key5",
+      "name": {
+        "key": "Max"
+      },
+      "queryRole": "measure",
+      "minCount": 1
+    }
+  ]
+}

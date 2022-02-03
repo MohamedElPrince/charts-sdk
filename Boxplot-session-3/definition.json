@@ -1,0 +1,74 @@
+{
+  "icon": "./assets/icon.svg",
+  "name": "Boxplot-session-3",
+  "hint": "This chart type needs 1 dimension and 3 measures",
+  "options": {
+    "aggregation": true,
+    "individualFilter": true
+  },
+  "settings": [
+    {
+      "name": {
+        "key": "Setting group"
+      },
+      "settings": [
+        {
+          "name": {
+            "key": "Name"
+          },
+          "key": "key1",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "bindingsTrays": [
+    {
+      "key": "tray-key",
+      "name": "Dimension",
+      "queryRole": "row",
+      "minCount": 1
+    },
+    {
+      "key": "tray-key1",
+      "name": {
+        "key": "Min"
+      },
+      "queryRole": "measure",
+      "minCount": 1,
+      "maxCount": 1
+    },
+    {
+      "key": "tray-key2",
+      "name": {
+        "key": "Q1"
+      },
+      "queryRole": "measure",
+      "minCount": 1
+    },
+    {
+      "key": "tray-key3",
+      "name": {
+        "key": "median"
+      },
+      "queryRole": "measure",
+      "minCount": 1
+    },
+    {
+      "key": "tray-key4",
+      "name": {
+        "key": "Q3"
+      },
+      "queryRole": "measure",
+      "minCount": 1
+    },
+    {
+      "key": "tray-key5",
+      "name": {
+        "key": "Max"
+      },
+      "queryRole": "measure",
+      "minCount": 1
+    }
+  ]
+}
